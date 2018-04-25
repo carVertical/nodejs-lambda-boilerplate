@@ -1,6 +1,6 @@
 import nock from 'nock';
 
-import { action } from '../handler';
+import action from '../handler';
 
 class ContextMock {
   constructor(callback) {
@@ -21,7 +21,7 @@ describe('handler.action', () => {
 
   afterAll(() => {
     nock.enableNetConnect();
-  })
+  });
 
   beforeEach(() => {
     cb = jest.fn();

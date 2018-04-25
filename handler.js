@@ -1,9 +1,7 @@
-import { handlerWrapper } from './lib';
+import { handlerWrapper, sentryWrapper } from './lib';
 
-const _action = async (event, context) => {
-  return null;
-};
+const action = async (event, context) => console.log(`${JSON.stringify(context)}-${JSON.stringify(event)}`);
 
-const action = handlerWrapper(_action);
+const wrapped = sentryWrapper(handlerWrapper(action));
 
-export { action };
+export default wrapped;
