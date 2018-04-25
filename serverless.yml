@@ -1,25 +1,39 @@
-service: report-aggregators
+service: nodejs-lambda-boilerplate
 
 # Use serverless-webpack plugin to transpile ES6/ES7
 plugins:
   - serverless-webpack
+  - serverless-sentry
 
 # Enable auto-packing of external modules
 custom:
+  sentry:
+    dsn: ${self:provider.environment.SENTRY_DSN}
   webpack:
     includeModules: true
 
 provider:
   name: aws
   runtime: nodejs6.10
-  stage: development
-  region: eu-west-1
+  stage: ${opt:stage, 'dev'}
+  profile: ${opt:profile}
+  region: eu-central-1
   environment:
-    ENV: ${file(config.${self:provider.stage}.json):ENV}
+    SENTRY_DSN: ${file(config.${self:provider.stage}.json):SENTRY_DSN}
 
 functions:
   action:
     handler: handler.action
     description: lambda boilerplate
-    name: ${self:provider.stage}-lambda-boilerplate
     events:
+      - sns:
+        topicName: ${self:service}-${self:provider.stage}-boilerplate
+        arn:
+          Fn::Join:
+            - ""
+            -
+              - "arn:aws:sns:"
+              - Ref: "AWS::Region"
+              - ":"
+              - Ref: "AWS::AccountId"
+              - ":${self:service}-${self:provider.stage}-boilerplate"

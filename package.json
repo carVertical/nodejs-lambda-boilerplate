@@ -39,13 +39,17 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-3": "^6.24.1",
     "dotenv": "^5.0.1",
+    "nock": "^9.2.5",
     "jest": "^22.4.2",
     "regenerator-runtime": "^0.11.1",
+    "serverless-sentry": "^1.0.0",
     "serverless-webpack": "^5.1.0",
     "webpack": "^4.0.1",
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "raven": "^2.5.0",
+    "serverless-sentry-lib": "^1.0.1",
     "babel-runtime": "^6.26.0"
   }
 }

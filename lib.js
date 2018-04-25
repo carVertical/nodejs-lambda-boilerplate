@@ -1,3 +1,6 @@
+import Raven from 'raven';
+import RavenLambdaWrapper from 'serverless-sentry-lib'
+
 const handlerWrapper = (func) => async (event, context, callback) => {
   try {
     const result = await func(event, context);
@@ -9,6 +12,9 @@ const handlerWrapper = (func) => async (event, context, callback) => {
   }
 };
 
+const sentryWrapper = (func) => RavenLambdaWrapper.handler(Raven, func);
+
 export {
-  handlerWrapper
+  handlerWrapper,
+  sentryWrapper
 };

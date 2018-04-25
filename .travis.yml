@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - node
+
+install:
+  - npm install
+  - npm install -g serverless serverless-webpack serverless-sentry
+
+script:
+  - npm test
+
+cache:
+  directories:
+    - node_modules
+
+deploy:
+  - provider: script
+    script: sls deploy -s prod --sentryVersion BOILERPLATE-$TRAVIS_JOB_NUMBER
+    on:
+      branch: master
+  - provider: script
+    script: sls deploy -s staging --sentryVersion BOILERPLATE-$TRAVIS_JOB_NUMBER
+    on:
+      branch: develop
+
+branches:
+  only:
+    - develop
+    - master
